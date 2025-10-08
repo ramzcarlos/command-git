@@ -16,6 +16,8 @@ class MarketTracker:
     - Eventos por cliente y stream global
     - Top items por día (ZSET)
     - Usuarios únicos por día (HLL)
+    -es un PoC con redis
+    
     """
 
     def __init__(
