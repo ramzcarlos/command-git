@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+// se crea entidad para guardar pdf, jpg ect en la tabla docmentos 
+
+
 @Entity
 @Table(name = "documentos",
         indexes = @Index(name = "idx_documentos_usuario", columnList = "usuario_id"))

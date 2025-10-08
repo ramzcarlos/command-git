@@ -13,6 +13,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+// se crea entitad para realizar el login con email y contraseña
+
+
 @Entity
 
 @Table(name = "usuarios",
