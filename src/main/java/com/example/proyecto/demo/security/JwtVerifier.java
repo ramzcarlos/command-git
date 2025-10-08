@@ -11,7 +11,7 @@ import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.List;
 import java.util.Set;
-
+// se realizaron los cambios pertinentes en jwt y se elemino el archivo de jwtTest
 @Component
 public class JwtVerifier {
 
