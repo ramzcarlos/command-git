@@ -20,13 +20,11 @@ jobs:
           cache: maven
 
       - name: Build (skip tests)
-        run: mvn -B -DskipTest clean package
-
-      - name: Package JAR (skip tests)
-        run: mvn -B -DskipTests package
+        run: mvn -B -DskipTests clean package
 
       - name: Upload artifact (JAR)
         uses: actions/upload-artifact@v4
         with:
           name: backend-jar
           path: target/*.jar
+
