@@ -1,0 +1,39 @@
+name: Release Backend
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # necesario para crear el Release y adjuntar archivos
+    env:
+      DB_URL: ${{ secrets.DB_URL }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASS: ${{ secrets.DB_PASS }}
+      JWT_SECRET_BASE64: ${{ secrets.JWT_SECRET_BASE64 }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Build (perfil ci)
+        run: |
+          export JAVA_TOOL_OPTIONS="-Dspring.profiles.active=ci"
+          mvn -B -DskipTests clean package
+
+      - name: Create GitHub Release and upload JAR
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            target/*.jar
