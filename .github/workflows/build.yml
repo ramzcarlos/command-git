@@ -1,0 +1,39 @@
+name: Build Backend
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [develop, main]
+
+jobs:
+  maven:
+    runs-on: ubuntu-latest
+    env:
+      DB_URL: ${{ secrets.DB_URL }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASS: ${{ secrets.DB_PASS }}
+      JWT_SECRET_BASE64: ${{ secrets.JWT_SECRET_BASE64 }}
+
+    steps:
+      - name: Checkout
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Build (skip tests)
+        run: |
+          export JAVA_TOOL_OPTIONS="-Dspring.profiles.active=ci"
+          mvn -B -DskipTests clean package
+
+      - name: Upload artifact (JAR)
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-jar
+          path: target/*.jar
+
